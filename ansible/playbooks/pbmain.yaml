@@ -1,0 +1,18 @@
+---
+- name: Stage01
+  hosts: hcreator
+  gather_facts: no
+
+  roles:
+    - role: creator
+      vars: 
+        stage: "One"
+    
+    
+- name: Stage02
+  hosts: htarget
+
+  roles:
+    - role: target
+      vars: 
+        stage: "Two"

@@ -1,0 +1,27 @@
+---
+
+- name: Common things for all projects, the base
+  debug:
+    msg: "{{ 'Doing common things on ' + inventory_hostname  }}"
+
+- name: Scan for hooks to be run on creator
+  set_fact: 
+     hooks: "{{ lookup('fileglob', playbook_dir + '/../hooks/creator/*.yaml', wantlist=True) }}"
+
+- name: Hook statistic
+  debug: 
+    msg: "{{ ( hooks | length ) | string + ' hooks for Creator' }}"
+
+- name: Run hooks in alpha order
+  include_tasks: "{{ item }}"
+  loop: "{{ hooks | sort(reverse = False) }}"
+  when: hooks | length > 0
+
+- name: More common things for all projects, the base
+  debug:
+    msg: "{{ 'Doing more common things on ' + inventory_hostname  }}"
+
+- name: Debug vars on hcreator
+  debug:
+    msg: "{{ hostvars | to_nice_yaml }}"
+

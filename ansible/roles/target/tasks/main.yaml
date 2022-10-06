@@ -1,0 +1,41 @@
+---
+
+- name: Common things for all projects needs to be done on the target
+  debug:
+    msg: "{{ 'Doing common things on ' + inventory_hostname  }}"
+
+- name: Task on the target
+  shell: |
+     hostname -f
+     ip -br a
+  register: reg_task
+
+- name: Scan for hooks to be run on target
+  set_fact: 
+     hooks: "{{ lookup('fileglob', playbook_dir + '/../hooks/*target.yaml', wantlist=True) }}"
+
+- name: Hook statistic
+  debug: 
+    msg: "{{ ( hooks | length ) | string + ' hooks for Target' }}"
+
+- name: Run hooks in alpha order
+  include_tasks: "{{ item }}"
+  loop: "{{ hooks | sort(reverse = False) }}"
+  when: hooks | length > 0
+
+- name: More common things for all projects, the base
+  debug:
+    msg: "{{ 'Doing more common things on ' + inventory_hostname  }}"
+
+- name: Debug results
+  debug:
+    msg: "{{ reg_task | to_nice_yaml }}"
+
+- name: Debug vars
+  debug:
+    msg: "{{ hostvars | to_nice_yaml }}"
+
+- name: Debug vars
+  debug:
+    msg: "{{ hostvars['htarget'].ansible_host | to_nice_yaml }}"
+

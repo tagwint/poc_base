@@ -1,8 +1,8 @@
 # Concept points
 
 There are 2 hosts involved:
-1 - hcreator - localhost with ansible
-2 - htarget - remote/virtual host that is built and setup
+ 1. hcreator - localhost with ansible
+ 2. htarget - a remote host that is built and setup
 
 Thus we only need one environment with those two hosts defined
 

@@ -2,7 +2,7 @@
 
 There are 2 hosts involved:
  1. hcreator - localhost with ansible
- 2. hbuilder - a remote host that is built and setup
+ 2. hbuilder - a remote host that does build and setup
 
 Thus we only need one environment with those two hosts defined
 

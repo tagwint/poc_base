@@ -4,7 +4,7 @@ all:
   hosts:
     hcreator:
       ansible_connection: local
-    htarget:
+    hbuilder:
       ansible_host: 192.168.56.80
       ansible_user: root
 

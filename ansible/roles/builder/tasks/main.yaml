@@ -1,22 +1,22 @@
 ---
 
-- name: Common things for all projects needs to be done on the target
+- name: Common things for all projects needs to be done on the builder
   debug:
     msg: "{{ 'Doing common things on ' + inventory_hostname  }}"
 
-- name: Task on the target
+- name: Task on the builder
   shell: |
      hostname -f
      ip -br a
   register: reg_task
 
-- name: Scan for hooks to be run on target
+- name: Scan for hooks to be run on builder
   set_fact: 
-     hooks: "{{ lookup('fileglob', playbook_dir + '/../hooks/*target.yaml', wantlist=True) }}"
+     hooks: "{{ lookup('fileglob', playbook_dir + '/../hooks/*builder.yaml', wantlist=True) }}"
 
 - name: Hook statistic
   debug: 
-    msg: "{{ ( hooks | length ) | string + ' hooks for Target' }}"
+    msg: "{{ ( hooks | length ) | string + ' hooks for builder' }}"
 
 - name: Run hooks in alpha order
   include_tasks: "{{ item }}"
@@ -37,5 +37,5 @@
 
 - name: Debug vars
   debug:
-    msg: "{{ hostvars['htarget'].ansible_host | to_nice_yaml }}"
+    msg: "{{ hostvars['hbuilder'].ansible_host | to_nice_yaml }}"
 

@@ -10,9 +10,9 @@
     
     
 - name: Stage02
-  hosts: htarget
+  hosts: hbuilder
 
   roles:
-    - role: target
+    - role: builder
       vars: 
         stage: "Two"
